@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/icons/icon-48.png" width="96" height="96" alt="MiaoCrop Logo" />
+</p>
+
 # MiaoCrop
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
@@ -45,7 +49,15 @@ MiaoCrop 是一个纯前端（静态）的图片裁剪与导出工具。所有�
 
 ## 图标尺寸
 
-默认的图标尺寸定义在 `src/lib/image-processing.ts`：
+### 站点图标
+
+网站 favicon/logo 的资源位于 `public/icons/`：
+
+`16, 32, 48`。
+
+### 图标包导出尺寸
+
+图标包导出的默认尺寸定义在 `src/lib/image-processing.ts`（`ICON_SIZES`）：
 
 `16, 19, 24, 32, 48, 128, 256, 512`。
 
@@ -74,4 +86,3 @@ MiaoCrop 是一个纯前端（静态）的图片裁剪与导出工具。所有�
 ## License
 
 MIT
-

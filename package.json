@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "build:gh-pages": "vue-tsc -b && vite build --base=/MiaoCrop/",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -28,6 +28,8 @@ import {
   ICON_SIZES 
 } from '@/lib/image-processing'
 
+const baseUrl = import.meta.env.BASE_URL
+
 const props = defineProps<{
   previewUrl: string | null
   aspectRatio?: number
@@ -187,7 +189,7 @@ const handleCustomCoverDownload = () => {
         v-if="previewUrl" 
         :src="previewUrl" 
         class="max-w-full max-h-[160px] object-contain shadow-sm rounded-sm transition-all"
-        :class="{ 'bg-[url(/checkerboard.svg)]': transparentBg }"
+        :style="transparentBg ? { backgroundImage: `url(${baseUrl}checkerboard.svg)` } : undefined"
       />
       <div v-else class="text-muted-foreground text-sm flex flex-col items-center gap-2">
         <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center opacity-50">

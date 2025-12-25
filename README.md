@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./public/icons/icon-48.png" width="96" height="96" alt="MiaoCrop Logo" />
+</p>
+
 # MiaoCrop
 
 [English](./README.md) | [简体中文](./README.zh-CN.md)
@@ -45,7 +49,15 @@ MiaoCrop is a static, browser-only image cropper and export toolkit. All process
 
 ## Icon sizes
 
-The default icon sizes are defined in `src/lib/image-processing.ts` as:
+### Website icons
+
+The website favicon/logo assets live in `public/icons/`:
+
+`16, 32, 48`.
+
+### Icon pack export sizes
+
+The default icon pack export sizes are defined in `src/lib/image-processing.ts` (`ICON_SIZES`) as:
 
 `16, 19, 24, 32, 48, 128, 256, 512`.
 

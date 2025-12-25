@@ -7,6 +7,8 @@ import ImageUploader from '@/components/ImageUploader.vue'
 import CropEditor from '@/components/CropEditor.vue'
 import PreviewPanel from '@/components/PreviewPanel.vue'
 
+const baseUrl = import.meta.env.BASE_URL
+
 // Dark mode
 const mode = useColorMode()
 const toggleTheme = () => {
@@ -63,7 +65,7 @@ const reset = () => {
     <header class="border-b sticky top-0 bg-background/95 backdrop-blur z-50">
         <div class="container mx-auto px-4 h-16 flex items-center justify-between">
           <div class="flex items-center gap-2 font-bold text-xl">
-          <img src="/icons/icon-32.png" class="w-6 h-6" alt="MiaoCrop" />
+          <img :src="`${baseUrl}icons/icon-32.png`" class="w-6 h-6" alt="MiaoCrop" />
           <span>MiaoCrop</span>
         </div>
         <div class="flex items-center gap-2">
@@ -71,7 +73,7 @@ const reset = () => {
             <Sun v-if="mode === 'dark'" class="w-5 h-5" />
             <Moon v-else class="w-5 h-5" />
           </Button>
-          <a href="https://github.com/maochichen/MiaoCrop" target="_blank" class="text-sm font-medium hover:underline">
+          <a href="https://github.com/Konata9/MiaoCrop" target="_blank" class="text-sm font-medium hover:underline">
             GitHub
           </a>
         </div>
