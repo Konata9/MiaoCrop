@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "build:gh-pages": "vue-tsc -b && vite build --base=/MiaoCrop/",
+    "deploy:gh-pages": "npm run build:gh-pages && npx --yes gh-pages@^6.3.0 -d dist -b gh-pages",
     "preview": "vite preview"
   },
   "dependencies": {
