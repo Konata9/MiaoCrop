@@ -1,0 +1,129 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useColorMode } from '@vueuse/core'
+import { Moon, Sun, Scissors } from 'lucide-vue-next'
+import { Button } from '@/components/ui/button'
+import ImageUploader from '@/components/ImageUploader.vue'
+import CropEditor from '@/components/CropEditor.vue'
+import PreviewPanel from '@/components/PreviewPanel.vue'
+
+// Dark mode
+const mode = useColorMode()
+const toggleTheme = () => {
+  mode.value = mode.value === 'dark' ? 'light' : 'dark'
+}
+
+// State
+const originalImage = ref<string | null>(null)
+const previewImage = ref<string | null>(null)
+const cropResult = ref<any>(null)
+const editorRef = ref<any>(null) // Ref to CropEditor component
+
+// Handlers
+const handleUpload = (image: string) => {
+  originalImage.value = image
+}
+
+const handleCropChange = (result: any) => {
+  cropResult.value = result
+  // Update preview
+  if (result.canvas) {
+    previewImage.value = result.canvas.toDataURL()
+  }
+}
+
+const handleDownload = (format: string) => {
+  if (!editorRef.value) return
+  
+  const { canvas } = editorRef.value.getResult()
+  if (canvas) {
+    const link = document.createElement('a')
+    link.download = `cropped-image.${format}`
+    link.href = canvas.toDataURL(`image/${format}`)
+    link.click()
+  }
+}
+
+const reset = () => {
+  originalImage.value = null
+  previewImage.value = null
+  cropResult.value = null
+}
+</script>
+
+<template>
+  <div class="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
+    <!-- Header -->
+    <header class="border-b sticky top-0 bg-background/95 backdrop-blur z-50">
+      <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-2 font-bold text-xl">
+          <Scissors class="w-6 h-6 text-primary" />
+          <span>MiaoCrop</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <Button variant="ghost" size="icon" @click="toggleTheme">
+            <Sun v-if="mode === 'dark'" class="w-5 h-5" />
+            <Moon v-else class="w-5 h-5" />
+          </Button>
+          <a href="https://github.com/maochichen/MiaoCrop" target="_blank" class="text-sm font-medium hover:underline">
+            GitHub
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-1 container mx-auto px-4 py-8">
+      <transition name="fade" mode="out-in">
+        <div v-if="!originalImage" class="flex flex-col items-center justify-center min-h-[60vh] gap-8">
+          <div class="text-center space-y-2">
+            <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
+              Simple Image Cropper
+            </h1>
+            <p class="text-muted-foreground text-lg max-w-[600px]">
+              Upload, crop, and resize your images entirely in your browser. No data leaves your device.
+            </p>
+          </div>
+          <ImageUploader @upload="handleUpload" />
+        </div>
+
+        <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-12rem)] min-h-[600px]">
+          <!-- Editor Area -->
+          <div class="lg:col-span-2 flex flex-col gap-4 h-full">
+            <div class="flex items-center justify-between shrink-0">
+              <h2 class="text-2xl font-semibold tracking-tight">Editor</h2>
+              <Button variant="ghost" size="sm" @click="reset" class="text-destructive hover:text-destructive hover:bg-destructive/10">
+                Reset Image
+              </Button>
+            </div>
+            <CropEditor 
+              ref="editorRef"
+              :image="originalImage" 
+              @change="handleCropChange" 
+            />
+          </div>
+
+          <!-- Sidebar -->
+          <div class="lg:col-span-1 h-full">
+            <PreviewPanel 
+              :preview-url="previewImage" 
+              @download="handleDownload" 
+            />
+          </div>
+        </div>
+      </transition>
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>
