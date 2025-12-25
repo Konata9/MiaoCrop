@@ -17,11 +17,13 @@ const toggleTheme = () => {
 const originalImage = ref<string | null>(null)
 const previewImage = ref<string | null>(null)
 const cropResult = ref<any>(null)
+const currentAspectRatio = ref<number | undefined>(undefined)
 const editorRef = ref<any>(null) // Ref to CropEditor component
 
 // Handlers
 const handleUpload = (image: string) => {
   originalImage.value = image
+  currentAspectRatio.value = undefined
 }
 
 const handleCropChange = (result: any) => {
@@ -30,6 +32,10 @@ const handleCropChange = (result: any) => {
   if (result.canvas) {
     previewImage.value = result.canvas.toDataURL()
   }
+}
+
+const handleAspectRatioChange = (ratio: number | undefined) => {
+  currentAspectRatio.value = ratio
 }
 
 const handleDownload = (format: string) => {
@@ -100,6 +106,7 @@ const reset = () => {
               ref="editorRef"
               :image="originalImage" 
               @change="handleCropChange" 
+              @update:aspect-ratio="handleAspectRatioChange"
             />
           </div>
 
@@ -107,6 +114,7 @@ const reset = () => {
           <div class="lg:col-span-1 h-full">
             <PreviewPanel 
               :preview-url="previewImage" 
+              :aspect-ratio="currentAspectRatio"
               @download="handleDownload" 
             />
           </div>

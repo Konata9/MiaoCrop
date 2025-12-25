@@ -4,12 +4,10 @@ import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 import { Button } from '@/components/ui/button'
 import { 
-  RotateCcw, 
-  RotateCw, 
-  FlipHorizontal, 
-  FlipVertical,
-  Minus,
-  Plus
+  RotateCcw,
+  RotateCw,
+  FlipHorizontal,
+  FlipVertical
 } from 'lucide-vue-next'
 
 const props = defineProps<{
@@ -19,9 +17,11 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'change', result: any): void
+  (e: 'update:aspectRatio', ratio: number | undefined): void
 }>()
 
 const cropper = ref<any>(null)
+const localAspectRatio = ref<number | undefined>(props.aspectRatio)
 
 const handleChange = (result: any) => {
   emit('change', result)
@@ -35,8 +35,9 @@ const flip = (horizontal: boolean, vertical: boolean) => {
   cropper.value?.flip(horizontal, vertical)
 }
 
-const zoom = (factor: number) => {
-  cropper.value?.zoom(factor)
+const setAspectRatio = (ratio: number | undefined) => {
+  localAspectRatio.value = ratio
+  emit('update:aspectRatio', ratio)
 }
 
 defineExpose({
@@ -52,7 +53,7 @@ defineExpose({
         class="cropper h-full"
         :src="image"
         :stencil-props="{
-          aspectRatio: aspectRatio
+          aspectRatio: localAspectRatio
         }"
         @change="handleChange"
       />
@@ -73,11 +74,45 @@ defineExpose({
         <FlipVertical class="w-4 h-4" />
       </Button>
       <div class="w-px h-6 bg-border mx-1"></div>
-      <Button variant="ghost" size="icon" @click="zoom(0.8)" title="Zoom Out">
-        <Minus class="w-4 h-4" />
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        :class="{ 'bg-secondary': !localAspectRatio }"
+        @click="setAspectRatio(undefined)"
+      >
+        Free
       </Button>
-      <Button variant="ghost" size="icon" @click="zoom(1.2)" title="Zoom In">
-        <Plus class="w-4 h-4" />
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        :class="{ 'bg-secondary': localAspectRatio === 1 }"
+        @click="setAspectRatio(1)"
+      >
+        1:1
+      </Button>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        :class="{ 'bg-secondary': localAspectRatio === 4/3 }"
+        @click="setAspectRatio(4/3)"
+      >
+        4:3
+      </Button>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        :class="{ 'bg-secondary': localAspectRatio === 16/9 }"
+        @click="setAspectRatio(16/9)"
+      >
+        16:9
+      </Button>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        :class="{ 'bg-secondary': localAspectRatio === 16/10 }"
+        @click="setAspectRatio(16/10)"
+      >
+        16:10
       </Button>
     </div>
   </div>
@@ -86,5 +121,17 @@ defineExpose({
 <style>
 .vue-advanced-cropper__background, .vue-advanced-cropper__foreground {
   background: hsl(var(--muted));
+}
+
+/* Custom crop box styles for better visibility */
+.vue-simple-handler {
+  background-color: rgb(59, 130, 246) !important; /* blue-500 */
+  opacity: 1 !important;
+}
+
+.vue-simple-line {
+  border-color: rgb(59, 130, 246) !important;
+  opacity: 1 !important;
+  border-width: 1px !important;
 }
 </style>
