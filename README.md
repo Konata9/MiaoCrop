@@ -1,14 +1,20 @@
 # MiaoCrop
 
-A simple, pure static image cropping tool built with Vue 3, Vite, and shadcn-vue.
+[English](./README.md) | [简体中文](./README.zh-CN.md)
+
+MiaoCrop is a static, browser-only image cropper and export toolkit. All processing runs locally in your browser (no server-side uploads).
 
 ## Features
 
-- **Pure Static**: No server-side processing. All image manipulations happen in your browser.
-- **Modern UI**: Built with shadcn-vue and Tailwind CSS.
-- **Dark Mode**: Fully supported.
-- **Powerful Cropping**: Zoom, rotate, flip, and crop with ease using `vue-advanced-cropper`.
-- **Export Options**: Download as PNG, JPEG, or WebP.
+- **Pure Static**: No server-side processing. Everything runs in your browser.
+- **Upload UX**: Drag & drop or click to upload images.
+- **Crop Tools**: Crop, rotate, flip, and pick common aspect ratios.
+- **Export**:
+  - Standard export (download the cropped image)
+  - Icon pack export (download a ZIP containing multiple PNG icon sizes)
+  - Cover export (download preset/custom sized PNG covers)
+- **Remove White Background**: Convert near-white pixels to transparency (PNG).
+- **Dark Mode**: Light/dark theme toggle.
 
 ## Tech Stack
 
@@ -18,22 +24,51 @@ A simple, pure static image cropping tool built with Vue 3, Vite, and shadcn-vue
 - Tailwind CSS
 - shadcn-vue
 - vue-advanced-cropper
+- @vueuse/core
+- JSZip + file-saver
+- lucide-vue-next
+
+## How it works
+
+- Images are loaded via `FileReader` as Data URLs (`src/components/ImageUploader.vue`).
+- Cropping uses `vue-advanced-cropper` and a `<canvas>` result (`src/components/CropEditor.vue`).
+- Export tools are implemented with Canvas APIs (`src/lib/image-processing.ts`).
+
+## Usage
+
+1. Upload an image.
+2. Crop/rotate/flip, and optionally choose an aspect ratio.
+3. In the Export panel:
+   - **Standard**: Download the cropped image.
+   - **Icons**: Pick sizes and download a ZIP.
+   - **Covers**: Download preset sizes or enter a custom size.
+
+## Icon sizes
+
+The default icon sizes are defined in `src/lib/image-processing.ts` as:
+
+`16, 19, 24, 32, 48, 128, 256, 512`.
 
 ## Setup
 
 1. Install dependencies:
    ```bash
-   npm install
+   pnpm install
    ```
 
-2. Start development server:
+2. Start dev server:
    ```bash
-   npm run dev
+   pnpm dev
    ```
 
 3. Build for production:
    ```bash
-   npm run build
+   pnpm build
+   ```
+
+4. Preview the production build locally:
+   ```bash
+   pnpm preview
    ```
 
 ## License

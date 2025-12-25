@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core'
-import { Moon, Sun, Scissors } from 'lucide-vue-next'
+import { Moon, Sun } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import ImageUploader from '@/components/ImageUploader.vue'
 import CropEditor from '@/components/CropEditor.vue'
@@ -61,9 +61,9 @@ const reset = () => {
   <div class="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
     <!-- Header -->
     <header class="border-b sticky top-0 bg-background/95 backdrop-blur z-50">
-      <div class="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div class="flex items-center gap-2 font-bold text-xl">
-          <Scissors class="w-6 h-6 text-primary" />
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+          <div class="flex items-center gap-2 font-bold text-xl">
+          <img src="/icons/icon-32.png" class="w-6 h-6" alt="MiaoCrop" />
           <span>MiaoCrop</span>
         </div>
         <div class="flex items-center gap-2">
