@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/icons/icon-48.png" width="96" height="96" alt="MiaoCrop Logo" />
+  <img src="./public/icons/icon-128.png" width="128" height="128" alt="MiaoCrop Logo" />
 </p>
 
 # MiaoCrop
@@ -53,7 +53,7 @@ MiaoCrop 是一个纯前端（静态）的图片裁剪与导出工具。所有�
 
 网站 favicon/logo 的资源位于 `public/icons/`：
 
-`16, 32, 48`。
+`16, 32, 48, 128, 256`。
 
 ### 图标包导出尺寸
 

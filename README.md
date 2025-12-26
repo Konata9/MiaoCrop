@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/icons/icon-48.png" width="96" height="96" alt="MiaoCrop Logo" />
+  <img src="./public/icons/icon-128.png" width="128" height="128" alt="MiaoCrop Logo" />
 </p>
 
 # MiaoCrop
@@ -53,7 +53,7 @@ MiaoCrop is a static, browser-only image cropper and export toolkit. All process
 
 The website favicon/logo assets live in `public/icons/`:
 
-`16, 32, 48`.
+`16, 32, 48, 128, 256`.
 
 ### Icon pack export sizes
 
