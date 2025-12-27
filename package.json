@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
+    "build:cf-pages": "npm run build",
+    "deploy:cf-pages": "npm run build:cf-pages && npx --yes wrangler@^4.31.0 pages deploy dist --project-name miaocrop",
     "build:gh-pages": "vue-tsc -b && vite build --base=/MiaoCrop/",
     "deploy:gh-pages": "npm run build:gh-pages && npx --yes gh-pages@^6.3.0 -d dist -b gh-pages",
     "preview": "vite preview"
