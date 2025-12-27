@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { Upload } from 'lucide-vue-next'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
+import { useI18n } from '@/lib/i18n'
 
 const emit = defineEmits<{
   (e: 'upload', image: string): void
@@ -10,6 +11,8 @@ const emit = defineEmits<{
 
 const isDragging = ref(false)
 const fileInput = ref<HTMLInputElement | null>(null)
+
+const { t } = useI18n()
 
 const handleDragOver = (e: DragEvent) => {
   e.preventDefault()
@@ -44,7 +47,7 @@ const handleFileSelect = (e: Event) => {
 
 const processFile = (file: File) => {
   if (!file.type.startsWith('image/')) {
-    alert('Please upload an image file')
+    alert(t('uploader.invalidFile'))
     return
   }
 
@@ -78,13 +81,13 @@ const triggerFileInput = () => {
         <Upload class="w-8 h-8 text-muted-foreground" />
       </div>
       <div class="space-y-1">
-        <h3 class="font-semibold text-lg tracking-tight">Upload an image</h3>
+        <h3 class="font-semibold text-lg tracking-tight">{{ t('uploader.title') }}</h3>
         <p class="text-sm text-muted-foreground">
-          Drag and drop or click to upload
+          {{ t('uploader.subtitle') }}
         </p>
       </div>
       <Button variant="secondary" size="sm" class="mt-2 pointer-events-none">
-        Select File
+        {{ t('uploader.selectFile') }}
       </Button>
     </div>
     <input

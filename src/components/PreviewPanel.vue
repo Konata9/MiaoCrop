@@ -21,6 +21,7 @@ import {
 import { Download, Loader2, Package, Calculator } from 'lucide-vue-next'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
+import { useI18n } from '@/lib/i18n'
 import { 
   removeWhiteBackground, 
   resizeImage, 
@@ -29,6 +30,8 @@ import {
 } from '@/lib/image-processing'
 
 const baseUrl = import.meta.env.BASE_URL
+
+const { t } = useI18n()
 
 const props = defineProps<{
   previewUrl: string | null
@@ -180,7 +183,7 @@ const handleCustomCoverDownload = () => {
 <template>
   <div class="flex flex-col gap-4 p-4 border rounded-lg bg-card h-full overflow-hidden">
     <div class="flex items-center justify-between shrink-0">
-      <h3 class="font-semibold text-lg">Export</h3>
+      <h3 class="font-semibold text-lg">{{ t('export.title') }}</h3>
     </div>
     
     <!-- Preview Area (Compact) -->
@@ -195,7 +198,7 @@ const handleCustomCoverDownload = () => {
         <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center opacity-50">
           <Download class="w-6 h-6" />
         </div>
-        No preview
+        {{ t('export.noPreview') }}
       </div>
     </div>
     
@@ -203,24 +206,24 @@ const handleCustomCoverDownload = () => {
     <div class="flex-1 min-h-0 flex flex-col space-y-4 pt-4 border-t">
       <div class="flex items-center space-x-2 shrink-0">
         <Switch id="transparent-mode" v-model:checked="transparentBg" />
-        <Label htmlFor="transparent-mode">Remove White Background</Label>
+        <Label htmlFor="transparent-mode">{{ t('export.removeWhiteBg') }}</Label>
       </div>
 
       <Tabs v-model="activeTab" default-value="standard" class="w-full flex-1 flex flex-col min-h-0">
         <TabsList class="grid w-full grid-cols-3 shrink-0">
-          <TabsTrigger value="standard">Standard</TabsTrigger>
-          <TabsTrigger value="icons">Icons</TabsTrigger>
-          <TabsTrigger value="covers">Covers</TabsTrigger>
+          <TabsTrigger value="standard">{{ t('export.tab.standard') }}</TabsTrigger>
+          <TabsTrigger value="icons">{{ t('export.tab.icons') }}</TabsTrigger>
+          <TabsTrigger value="covers">{{ t('export.tab.covers') }}</TabsTrigger>
         </TabsList>
 
         <!-- Standard Tab -->
         <TabsContent value="standard" class="flex-1 overflow-y-auto space-y-4 pt-4 pr-1">
           <div class="space-y-4 p-1">
             <div class="space-y-2">
-              <Label>Format</Label>
+              <Label>{{ t('export.format') }}</Label>
               <Select v-model="format">
                 <SelectTrigger>
-                  <SelectValue placeholder="Select format" />
+                  <SelectValue :placeholder="t('export.selectFormat')" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="png">PNG</SelectItem>
@@ -231,14 +234,14 @@ const handleCustomCoverDownload = () => {
             </div>
             
             <div class="rounded-md bg-muted p-3 text-sm text-muted-foreground">
-              <p>Standard export mode. Best for general use.</p>
+              <p>{{ t('export.standardHint') }}</p>
             </div>
           </div>
           
           <Button class="w-full mt-auto" size="lg" :disabled="!previewUrl || processing" @click="handleStandardDownload">
             <Loader2 v-if="processing" class="w-4 h-4 mr-2 animate-spin" />
             <Download v-else class="w-4 h-4 mr-2" />
-            Download Image
+            {{ t('export.downloadImage') }}
           </Button>
         </TabsContent>
 
@@ -246,7 +249,7 @@ const handleCustomCoverDownload = () => {
         <TabsContent value="icons" class="flex-1 overflow-y-auto space-y-4 pt-4 pr-1">
           <div class="space-y-4 p-1">
             <div class="text-sm text-muted-foreground mb-2">
-              Select icon sizes to generate:
+              {{ t('export.selectIconSizes') }}
             </div>
             <div class="grid grid-cols-2 gap-3">
               <div v-for="size in ICON_SIZES" :key="size" class="flex items-center space-x-2 border p-2 rounded hover:bg-muted/50 transition-colors">
@@ -268,7 +271,7 @@ const handleCustomCoverDownload = () => {
           <Button class="w-full mt-auto" size="lg" :disabled="!previewUrl || processing" @click="handleIconDownload">
             <Loader2 v-if="processing" class="w-4 h-4 mr-2 animate-spin" />
             <Package v-else class="w-4 h-4 mr-2" />
-            Download ZIP
+            {{ t('export.downloadZip') }}
           </Button>
         </TabsContent>
 
@@ -284,7 +287,7 @@ const handleCustomCoverDownload = () => {
             >
               <div class="flex flex-col items-start gap-1">
                 <span class="font-semibold">1280 x 800</span>
-                <span class="text-xs text-muted-foreground">MacBook Air / Laptop</span>
+                <span class="text-xs text-muted-foreground">{{ t('export.cover.laptop') }}</span>
               </div>
               <Download class="w-4 h-4 text-muted-foreground" />
             </Button>
@@ -296,32 +299,32 @@ const handleCustomCoverDownload = () => {
             >
               <div class="flex flex-col items-start gap-1">
                 <span class="font-semibold">640 x 400</span>
-                <span class="text-xs text-muted-foreground">Thumbnail / Preview</span>
+                <span class="text-xs text-muted-foreground">{{ t('export.cover.thumbnail') }}</span>
               </div>
               <Download class="w-4 h-4 text-muted-foreground" />
             </Button>
             
             <!-- Custom Dimensions -->
             <div class="space-y-3 pt-2 border-t mt-2">
-              <Label class="text-xs font-semibold text-muted-foreground uppercase">Custom Size</Label>
+              <Label class="text-xs font-semibold text-muted-foreground uppercase">{{ t('export.cover.customSize') }}</Label>
               <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1.5">
-                  <Label for="custom-width" class="text-xs">Width (px)</Label>
+                  <Label for="custom-width" class="text-xs">{{ t('export.cover.width') }}</Label>
                   <Input 
                     id="custom-width" 
                     type="number" 
                     v-model="customWidth" 
-                    placeholder="Width"
+                    :placeholder="t('export.cover.widthPlaceholder')"
                     min="1"
                   />
                 </div>
                 <div class="space-y-1.5">
-                  <Label for="custom-height" class="text-xs">Height (px)</Label>
+                  <Label for="custom-height" class="text-xs">{{ t('export.cover.height') }}</Label>
                   <Input 
                     id="custom-height" 
                     type="number" 
                     v-model="customHeight" 
-                    placeholder="Height"
+                    :placeholder="t('export.cover.heightPlaceholder')"
                     min="1"
                   />
                 </div>
@@ -334,7 +337,7 @@ const handleCustomCoverDownload = () => {
                 @click="handleCustomCoverDownload"
               >
                 <Calculator class="w-4 h-4 mr-2" />
-                Download Custom
+                {{ t('export.cover.downloadCustom') }}
               </Button>
             </div>
           </div>

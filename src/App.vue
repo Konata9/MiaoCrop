@@ -3,11 +3,25 @@ import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core'
 import { Moon, Sun } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import ImageUploader from '@/components/ImageUploader.vue'
 import CropEditor from '@/components/CropEditor.vue'
 import PreviewPanel from '@/components/PreviewPanel.vue'
+import { useI18n } from '@/lib/i18n'
 
 const baseUrl = import.meta.env.BASE_URL
+
+const { locale, setLocale, t } = useI18n()
+
+const setLocaleFromSelect = (value: unknown) => {
+  if (value === 'en' || value === 'zh-CN') setLocale(value)
+}
 
 // Dark mode
 const mode = useColorMode()
@@ -69,6 +83,15 @@ const reset = () => {
           <span>MiaoCrop</span>
         </div>
         <div class="flex items-center gap-2">
+          <Select :model-value="locale" @update:model-value="setLocaleFromSelect">
+            <SelectTrigger class="h-9 w-[120px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="zh-CN">简体中文</SelectItem>
+            </SelectContent>
+          </Select>
           <Button variant="ghost" size="icon" @click="toggleTheme">
             <Sun v-if="mode === 'dark'" class="w-5 h-5" />
             <Moon v-else class="w-5 h-5" />
@@ -86,10 +109,10 @@ const reset = () => {
         <div v-if="!originalImage" class="flex flex-col items-center justify-center min-h-[60vh] gap-8">
           <div class="text-center space-y-2">
             <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
-              Simple Image Cropper
+              {{ t('hero.title') }}
             </h1>
             <p class="text-muted-foreground text-lg max-w-[600px]">
-              Upload, crop, and resize your images entirely in your browser. No data leaves your device.
+              {{ t('hero.subtitle') }}
             </p>
           </div>
           <ImageUploader @upload="handleUpload" />
@@ -99,9 +122,9 @@ const reset = () => {
           <!-- Editor Area -->
           <div class="lg:col-span-2 flex flex-col gap-4 h-full">
             <div class="flex items-center justify-between shrink-0">
-              <h2 class="text-2xl font-semibold tracking-tight">Editor</h2>
+              <h2 class="text-2xl font-semibold tracking-tight">{{ t('editor.title') }}</h2>
               <Button variant="ghost" size="sm" @click="reset" class="text-destructive hover:text-destructive hover:bg-destructive/10">
-                Reset Image
+                {{ t('editor.reset') }}
               </Button>
             </div>
             <CropEditor 

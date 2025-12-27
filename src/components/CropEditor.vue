@@ -9,6 +9,9 @@ import {
   FlipHorizontal,
   FlipVertical
 } from 'lucide-vue-next'
+import { useI18n } from '@/lib/i18n'
+
+const { t } = useI18n()
 
 const props = defineProps<{
   image: string
@@ -60,17 +63,17 @@ defineExpose({
     </div>
     
     <div class="flex flex-wrap items-center justify-center gap-2 p-2 bg-background border rounded-lg shadow-sm">
-      <Button variant="ghost" size="icon" @click="rotate(-90)" title="Rotate Left">
+      <Button variant="ghost" size="icon" @click="rotate(-90)" :title="t('crop.rotateLeft')">
         <RotateCcw class="w-4 h-4" />
       </Button>
-      <Button variant="ghost" size="icon" @click="rotate(90)" title="Rotate Right">
+      <Button variant="ghost" size="icon" @click="rotate(90)" :title="t('crop.rotateRight')">
         <RotateCw class="w-4 h-4" />
       </Button>
       <div class="w-px h-6 bg-border mx-1"></div>
-      <Button variant="ghost" size="icon" @click="flip(true, false)" title="Flip Horizontal">
+      <Button variant="ghost" size="icon" @click="flip(true, false)" :title="t('crop.flipHorizontal')">
         <FlipHorizontal class="w-4 h-4" />
       </Button>
-      <Button variant="ghost" size="icon" @click="flip(false, true)" title="Flip Vertical">
+      <Button variant="ghost" size="icon" @click="flip(false, true)" :title="t('crop.flipVertical')">
         <FlipVertical class="w-4 h-4" />
       </Button>
       <div class="w-px h-6 bg-border mx-1"></div>
@@ -80,7 +83,7 @@ defineExpose({
         :class="{ 'bg-secondary': !localAspectRatio }"
         @click="setAspectRatio(undefined)"
       >
-        Free
+        {{ t('crop.free') }}
       </Button>
       <Button 
         variant="ghost" 
