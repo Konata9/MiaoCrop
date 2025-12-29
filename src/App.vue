@@ -21,7 +21,7 @@ const baseUrl = import.meta.env.BASE_URL
 const { locale, setLocale, t } = useI18n()
 
 const setLocaleFromSelect = (value: unknown) => {
-  if (value === 'en' || value === 'zh-CN') setLocale(value)
+  if (value === 'en' || value === 'zh-CN' || value === 'ja') setLocale(value)
 }
 
 // Dark mode
@@ -91,6 +91,7 @@ const reset = () => {
             <SelectContent>
               <SelectItem value="en">English</SelectItem>
               <SelectItem value="zh-CN">简体中文</SelectItem>
+              <SelectItem value="ja">日本語</SelectItem>
             </SelectContent>
           </Select>
           <Button variant="ghost" size="icon" @click="toggleTheme">

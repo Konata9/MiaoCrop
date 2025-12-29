@@ -1,11 +1,15 @@
 import { ref, watch } from 'vue'
 
-export type Locale = 'en' | 'zh-CN'
+export type Locale = 'en' | 'zh-CN' | 'ja'
 
 const storageKey = 'miaocrop_locale'
 
 const isZhLanguageTag = (tag: string) => {
   return tag.toLowerCase().startsWith('zh')
+}
+
+const isJaLanguageTag = (tag: string) => {
+  return tag.toLowerCase().startsWith('ja')
 }
 
 const detectBrowserLocale = (): Locale => {
@@ -16,14 +20,19 @@ const detectBrowserLocale = (): Locale => {
     : [navigator.language]
 
   const hasZh = tags.some((tag) => typeof tag === 'string' && isZhLanguageTag(tag))
-  return hasZh ? 'zh-CN' : 'en'
+  if (hasZh) return 'zh-CN'
+
+  const hasJa = tags.some((tag) => typeof tag === 'string' && isJaLanguageTag(tag))
+  if (hasJa) return 'ja'
+
+  return 'en'
 }
 
 const getInitialLocale = (): Locale => {
   if (typeof window === 'undefined') return 'en'
 
   const saved = window.localStorage.getItem(storageKey)
-  if (saved === 'en' || saved === 'zh-CN') return saved
+  if (saved === 'en' || saved === 'zh-CN' || saved === 'ja') return saved
   return detectBrowserLocale()
 }
 
@@ -108,6 +117,45 @@ const messages = {
     'ad.miaomint.desc': '像 Spotlight 一样管理标签页。极速搜索书签与历史记录。',
     'ad.miaomint.action': '安装',
   },
+  'ja': {
+    'app.title': 'MiaoCrop — シンプルな画像クロップツール',
+    'hero.title': '画像クロップツール',
+    'hero.subtitle': 'ブラウザだけで画像のアップロード、クロップ、リサイズが完了。データはサーバーに送信されず、すべてローカルで処理されます。',
+    'editor.title': 'エディタ',
+    'editor.reset': 'リセット',
+    'uploader.title': '画像をアップロード',
+    'uploader.subtitle': 'ドラッグ＆ドロップ、またはクリックして選択',
+    'uploader.selectFile': 'ファイルを選択',
+    'uploader.invalidFile': '画像ファイルを選択してください',
+    'crop.rotateLeft': '左に回転',
+    'crop.rotateRight': '右に回転',
+    'crop.flipHorizontal': '水平反転',
+    'crop.flipVertical': '垂直反転',
+    'crop.free': 'フリー',
+    'export.title': 'エクスポート',
+    'export.noPreview': 'プレビューなし',
+    'export.removeWhiteBg': '白背景を削除',
+    'export.tab.standard': '標準',
+    'export.tab.icons': 'アイコン',
+    'export.tab.covers': 'カバー',
+    'export.format': 'フォーマット',
+    'export.selectFormat': '形式を選択',
+    'export.standardHint': '標準エクスポートモード。一般的な用途に最適です。',
+    'export.downloadImage': '画像をダウンロード',
+    'export.selectIconSizes': '生成するアイコンサイズを選択：',
+    'export.downloadZip': 'ZIPをダウンロード',
+    'export.cover.laptop': 'ラップトップカバー',
+    'export.cover.thumbnail': 'サムネイル / プレビュー',
+    'export.cover.customSize': 'カスタムサイズ',
+    'export.cover.width': '幅 (px)',
+    'export.cover.height': '高さ (px)',
+    'export.cover.widthPlaceholder': '幅',
+    'export.cover.heightPlaceholder': '高さ',
+    'export.cover.downloadCustom': 'カスタムサイズをダウンロード',
+    'ad.miaomint.title': 'MiaoMint - Chrome拡張機能',
+    'ad.miaomint.desc': 'タブ、ブックマーク、履歴をSpotlightのように瞬時に検索・管理。',
+    'ad.miaomint.action': 'インストール',
+  },
 } as const
 
 type MessageKey = keyof (typeof messages)['en']
@@ -126,7 +174,7 @@ watch(
     if (typeof window === 'undefined') return
     window.localStorage.setItem(storageKey, value)
 
-    const lang = value === 'zh-CN' ? 'zh-CN' : 'en'
+    const lang = value === 'zh-CN' ? 'zh-CN' : value === 'ja' ? 'ja' : 'en'
     document.documentElement.lang = lang
     document.title = t('app.title')
   },
