@@ -65,6 +65,9 @@ const messages = {
     'export.cover.widthPlaceholder': 'Width',
     'export.cover.heightPlaceholder': 'Height',
     'export.cover.downloadCustom': 'Download Custom',
+    'ad.miaomint.title': 'MiaoMint - Chrome Extension',
+    'ad.miaomint.desc': 'Spotlight for your tabs. Manage tabs, bookmarks & history instantly.',
+    'ad.miaomint.action': 'Install',
   },
   'zh-CN': {
     'app.title': 'MiaoCrop — 图片裁剪工具',
@@ -101,6 +104,9 @@ const messages = {
     'export.cover.widthPlaceholder': '宽度',
     'export.cover.heightPlaceholder': '高度',
     'export.cover.downloadCustom': '下载自定义',
+    'ad.miaomint.title': 'MiaoMint - Chrome 效率神器',
+    'ad.miaomint.desc': '像 Spotlight 一样管理标签页。极速搜索书签与历史记录。',
+    'ad.miaomint.action': '安装',
   },
 } as const
 

@@ -13,6 +13,7 @@ import {
 import ImageUploader from '@/components/ImageUploader.vue'
 import CropEditor from '@/components/CropEditor.vue'
 import PreviewPanel from '@/components/PreviewPanel.vue'
+import MiaoMintAd from '@/components/MiaoMintAd.vue'
 import { useI18n } from '@/lib/i18n'
 
 const baseUrl = import.meta.env.BASE_URL
@@ -143,6 +144,9 @@ const reset = () => {
         <div class="lg:col-span-1 flex flex-col gap-4 lg:h-full lg:min-h-0 lg:overflow-hidden">
           <div class="flex items-center justify-between shrink-0 h-10">
             <h2 class="text-2xl font-semibold tracking-tight">{{ t('export.title') }}</h2>
+          </div>
+          <div class="shrink-0">
+            <MiaoMintAd />
           </div>
           <div class="flex-1 min-h-0 lg:overflow-hidden">
             <PreviewPanel 
