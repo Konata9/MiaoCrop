@@ -69,7 +69,7 @@ const triggerFileInput = () => {
 
 <template>
   <Card
-    class="flex flex-col items-center justify-center p-12 border-2 border-dashed rounded-xl transition-colors cursor-pointer hover:bg-muted/50 w-full max-w-xl mx-auto min-h-[300px]"
+    class="flex flex-col items-center justify-center p-12 transition-colors cursor-pointer hover:bg-muted/50 w-full"
     :class="{ 'border-primary bg-muted/50': isDragging, 'border-muted-foreground/25': !isDragging }"
     @dragover="handleDragOver"
     @dragleave="handleDragLeave"

@@ -74,9 +74,9 @@ const reset = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background text-foreground flex flex-col transition-colors duration-300">
+  <div class="min-h-screen lg:h-screen lg:overflow-hidden bg-background text-foreground flex flex-col transition-colors duration-300">
     <!-- Header -->
-    <header class="border-b sticky top-0 bg-background/95 backdrop-blur z-50">
+    <header class="border-b shrink-0 bg-background/95 backdrop-blur z-50">
         <div class="container mx-auto px-4 h-16 flex items-center justify-between">
           <div class="flex items-center gap-2 font-bold text-xl">
           <img :src="`${baseUrl}icons/icon-32.png`" class="w-6 h-6" alt="MiaoCrop" />
@@ -104,47 +104,56 @@ const reset = () => {
     </header>
 
     <!-- Main -->
-    <main class="flex-1 container mx-auto px-4 py-8">
-      <transition name="fade" mode="out-in">
-        <div v-if="!originalImage" class="flex flex-col items-center justify-center min-h-[60vh] gap-8">
-          <div class="text-center space-y-2">
-            <h1 class="text-4xl font-extrabold tracking-tight lg:text-5xl">
-              {{ t('hero.title') }}
-            </h1>
-            <p class="text-muted-foreground text-lg max-w-[600px]">
-              {{ t('hero.subtitle') }}
-            </p>
+    <main class="flex-1 container mx-auto px-4 py-4 lg:py-6 flex flex-col min-h-0">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:flex-1 lg:min-h-0 lg:overflow-hidden">
+        <!-- Editor Area -->
+        <div class="lg:col-span-2 flex flex-col gap-4 lg:h-full lg:min-h-0 lg:overflow-hidden">
+          <div class="flex items-center justify-between shrink-0 h-10">
+            <h2 class="text-2xl font-semibold tracking-tight">{{ t('editor.title') }}</h2>
+            <Button 
+              v-if="originalImage"
+              variant="ghost" 
+              size="sm" 
+              @click="reset" 
+              class="text-destructive hover:text-destructive hover:bg-destructive/10"
+            >
+              {{ t('editor.reset') }}
+            </Button>
           </div>
-          <ImageUploader @upload="handleUpload" />
+          
+          <div class="flex-1 min-h-[500px] lg:min-h-0 lg:overflow-hidden">
+            <transition name="fade" mode="out-in" class="h-full">
+              <ImageUploader 
+                v-if="!originalImage" 
+                class="h-full border-dashed border-2 rounded-lg shadow-none bg-secondary/30" 
+                @upload="handleUpload" 
+              />
+              <CropEditor 
+                v-else
+                ref="editorRef"
+                :image="originalImage" 
+                @change="handleCropChange" 
+                @update:aspect-ratio="handleAspectRatioChange"
+              />
+            </transition>
+          </div>
         </div>
 
-        <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-12rem)] min-h-[600px]">
-          <!-- Editor Area -->
-          <div class="lg:col-span-2 flex flex-col gap-4 h-full">
-            <div class="flex items-center justify-between shrink-0">
-              <h2 class="text-2xl font-semibold tracking-tight">{{ t('editor.title') }}</h2>
-              <Button variant="ghost" size="sm" @click="reset" class="text-destructive hover:text-destructive hover:bg-destructive/10">
-                {{ t('editor.reset') }}
-              </Button>
-            </div>
-            <CropEditor 
-              ref="editorRef"
-              :image="originalImage" 
-              @change="handleCropChange" 
-              @update:aspect-ratio="handleAspectRatioChange"
-            />
+        <!-- Sidebar -->
+        <div class="lg:col-span-1 flex flex-col gap-4 lg:h-full lg:min-h-0 lg:overflow-hidden">
+          <div class="flex items-center justify-between shrink-0 h-10">
+            <h2 class="text-2xl font-semibold tracking-tight">{{ t('export.title') }}</h2>
           </div>
-
-          <!-- Sidebar -->
-          <div class="lg:col-span-1 h-full">
+          <div class="flex-1 min-h-0 lg:overflow-hidden">
             <PreviewPanel 
               :preview-url="previewImage" 
               :aspect-ratio="currentAspectRatio"
               @download="handleDownload" 
+              class="h-full"
             />
           </div>
         </div>
-      </transition>
+      </div>
     </main>
   </div>
 </template>

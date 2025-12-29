@@ -50,10 +50,10 @@ defineExpose({
 
 <template>
   <div class="flex flex-col gap-4 h-full">
-    <div class="relative flex-1 min-h-[400px] bg-secondary/30 rounded-lg overflow-hidden border">
+    <div class="relative flex-1 min-h-0 bg-secondary/30 rounded-lg overflow-hidden border">
       <Cropper
         ref="cropper"
-        class="cropper h-full"
+        class="cropper absolute inset-0 w-full h-full"
         :src="image"
         :stencil-props="{
           aspectRatio: localAspectRatio
