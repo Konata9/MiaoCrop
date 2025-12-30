@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { Command } from 'lucide-vue-next'
 import { Card } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n'
 
 const { t } = useI18n()
