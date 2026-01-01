@@ -9,13 +9,13 @@
     <link rel="icon" type="image/png" sizes="128x128" href="/icons/icon-128.png" />
     <link rel="icon" type="image/png" sizes="256x256" href="/icons/icon-256.png" />
     <link rel="apple-touch-icon" href="/icons/icon-256.png" />
-    <link rel="canonical" href="https://example.com/" id="canonical-link" />
+    <link rel="canonical" href="https://miaocrop.konata9.cc/" id="canonical-link" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="MiaoCrop is a free, browser-only image cropper. Crop, rotate, flip, remove white background, and export PNG/JPEG/WebP, icon packs, and cover sizes."
+      content="Secure client-side image cropper. Crop, resize, rotate, and convert images to PNG/JPEG/WebP/Icons entirely in your browser. Private, free, and fast."
     />
-    <meta name="keywords" content="image cropper, crop image, resize image, icon generator, cover generator, transparent png, remove background, browser" />
+    <meta name="keywords" content="image cropper, online image cropper, privacy focused, crop image, resize image, icon generator, cover generator, transparent png, remove background, browser based" />
     <meta name="robots" content="index,follow" />
     <meta name="application-name" content="MiaoCrop" />
     <meta name="theme-color" content="#ffffff" />
@@ -23,30 +23,31 @@
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="MiaoCrop" />
-    <meta property="og:title" content="MiaoCrop — Free Online Image Cropper" />
+    <meta property="og:title" content="MiaoCrop - Secure Client-side Image Cropper" />
     <meta
       property="og:description"
-      content="Crop, rotate, flip, remove white background, and export images, icon packs, and cover sizes — all locally in your browser."
+      content="Crop, resize, and convert images locally in your browser. No uploads, 100% private. Supports Icons, Covers, and transparent PNGs."
     />
-    <meta property="og:url" content="" id="og-url" />
-    <meta property="og:image" content="/icons/icon-256.png" />
+    <meta property="og:url" content="https://miaocrop.konata9.cc/" id="og-url" />
+    <meta property="og:image" content="https://miaocrop.konata9.cc/icons/icon-256.png" />
     <meta property="og:image:width" content="256" />
     <meta property="og:image:height" content="256" />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="MiaoCrop — Free Online Image Cropper" />
+    <meta name="twitter:title" content="MiaoCrop - Secure Client-side Image Cropper" />
     <meta
       name="twitter:description"
-      content="A browser-only image cropper and exporter: icons, covers, and transparent PNG."
+      content="Crop, resize, and convert images locally in your browser. No uploads, 100% private."
     />
-    <meta name="twitter:image" content="/icons/icon-256.png" />
+    <meta name="twitter:image" content="https://miaocrop.konata9.cc/icons/icon-256.png" />
 
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "MiaoCrop",
+        "url": "https://miaocrop.konata9.cc/",
         "description": "A browser-only image cropper and export toolkit. Crop, rotate, flip, remove white background, and export images, icon packs, and cover sizes.",
         "applicationCategory": "MultimediaApplication",
         "operatingSystem": "Any",
@@ -54,7 +55,9 @@
           "@type": "Offer",
           "price": "0",
           "priceCurrency": "USD"
-        }
+        },
+        "featureList": "Image Cropping, Icon Generation, Cover Resizing, Privacy Focused, Offline Capable",
+        "browserRequirements": "Requires JavaScript. Works in all modern browsers."
       }
     </script>
 
@@ -72,19 +75,30 @@
       })()
     </script>
 
-    <title>MiaoCrop — Free Online Image Cropper</title>
+    <title>MiaoCrop - Secure Client-side Image Cropper & Converter</title>
   </head>
   <body>
     <div id="app">
-      <main>
-        <h1>MiaoCrop</h1>
-        <p>A browser-only image cropper and export toolkit.</p>
+      <main style="padding: 20px; font-family: sans-serif; line-height: 1.6;">
+        <h1>MiaoCrop - Secure Client-side Image Cropper</h1>
+        <p>MiaoCrop is a free, privacy-focused image tool that runs entirely in your browser. No images are uploaded to any server.</p>
+        
+        <h2>Key Features</h2>
         <ul>
-          <li>Crop, rotate, flip, and choose common aspect ratios</li>
-          <li>Remove white background (transparent PNG)</li>
-          <li>Export PNG/JPEG/WebP, icon packs (ZIP), and cover sizes</li>
-          <li>No server-side uploads. Everything runs locally.</li>
+          <li><strong>Secure & Private:</strong> 100% client-side processing. Your data never leaves your device.</li>
+          <li><strong>Image Cropping:</strong> Crop, rotate, and flip images with ease.</li>
+          <li><strong>Format Conversion:</strong> Convert images to PNG, JPEG, and WebP.</li>
+          <li><strong>Icon Generator:</strong> Create icon packs for various platforms instantly.</li>
+          <li><strong>Background Removal:</strong> Remove white backgrounds to create transparent PNGs.</li>
         </ul>
+
+        <h2>How to Use</h2>
+        <ol>
+          <li>Upload an image by dragging and dropping or selecting a file.</li>
+          <li>Use the editor to crop, rotate, or flip your image.</li>
+          <li>Select your desired export format (Standard, Icons, or Covers).</li>
+          <li>Download your processed image instantly.</li>
+        </ol>
       </main>
     </div>
     <script type="module" src="/src/main.ts"></script>

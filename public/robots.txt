@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://miaocrop.konata9.cc/sitemap.xml
