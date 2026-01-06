@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core'
-import { Moon, Sun } from 'lucide-vue-next'
+import { Moon, Sun, Upload } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import {
   Select,
@@ -36,8 +36,46 @@ const previewImage = ref<string | null>(null)
 const cropResult = ref<any>(null)
 const currentAspectRatio = ref<number | undefined>(undefined)
 const editorRef = ref<any>(null) // Ref to CropEditor component
+const isDraggingOver = ref(false)
 
 // Handlers
+const handleDragOver = (e: DragEvent) => {
+  if (!originalImage.value) return
+  e.preventDefault()
+  isDraggingOver.value = true
+}
+
+const handleDragLeave = (e: DragEvent) => {
+  e.preventDefault()
+  if (e.currentTarget && (e.currentTarget as HTMLElement).contains(e.relatedTarget as Node)) {
+    return
+  }
+  isDraggingOver.value = false
+}
+
+const handleDrop = (e: DragEvent) => {
+  e.preventDefault()
+  isDraggingOver.value = false
+  
+  const files = e.dataTransfer?.files
+  if (files && files.length > 0) {
+    const file = files[0]
+    if (!file) return
+
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        if (e.target?.result) {
+          handleUpload(e.target.result as string)
+        }
+      }
+      reader.readAsDataURL(file)
+    } else {
+      alert(t('uploader.invalidFile'))
+    }
+  }
+}
+
 const handleUpload = (image: string) => {
   originalImage.value = image
   currentAspectRatio.value = undefined
@@ -123,7 +161,20 @@ const reset = () => {
             </Button>
           </div>
           
-          <div class="flex-1 min-h-[500px] lg:min-h-0 lg:overflow-hidden">
+          <div 
+            class="flex-1 min-h-[500px] lg:min-h-0 lg:overflow-hidden relative"
+            @dragover="handleDragOver"
+            @dragleave="handleDragLeave"
+            @drop="handleDrop"
+          >
+            <div 
+              v-if="isDraggingOver && originalImage" 
+              class="absolute inset-0 z-50 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center border-2 border-dashed border-primary rounded-lg animate-in fade-in zoom-in-95 duration-200 pointer-events-none"
+            >
+              <Upload class="w-12 h-12 text-primary mb-4" />
+              <h3 class="text-xl font-semibold">{{ t('editor.dropToReplace') }}</h3>
+            </div>
+
             <transition name="fade" mode="out-in" class="h-full">
               <ImageUploader 
                 v-if="!originalImage" 

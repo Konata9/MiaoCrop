@@ -4,14 +4,16 @@
 
 # MiaoCrop
 
-[English](./README.md) | [简体中文](./README.zh-CN.md)
+[English](./README.md) | [简体中文](./README.zh-CN.md) | [Changelog](./CHANGELOG.md)
 
 MiaoCrop is a static, browser-only image cropper and export toolkit. All processing runs locally in your browser (no server-side uploads).
 
 ## Features
 
 - **Pure Static**: No server-side processing. Everything runs in your browser.
-- **Upload UX**: Drag & drop or click to upload images.
+- **Immersive Editor**: Seamlessly integrated upload and editing experience.
+- **Smart Upload**: Drag & drop to upload, or drop a new image onto the editor to replace instantly.
+- **Responsive Layout**: Optimized split-screen view for large displays with no scrollbars.
 - **Crop Tools**: Crop, rotate, flip, and pick common aspect ratios.
 - **Export**:
   - Standard export (download the cropped image)

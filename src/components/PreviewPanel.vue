@@ -277,7 +277,7 @@ const handleCustomCoverDownload = () => {
 
         <!-- Covers Tab -->
         <TabsContent value="covers" class="flex-1 overflow-y-auto space-y-4 pt-4 pr-1">
-          <div class="grid grid-cols-1 gap-3 p-1">
+          <div class="grid grid-cols-2 gap-3 p-1">
             <!-- Presets -->
             <Button 
               variant="outline" 
@@ -285,11 +285,10 @@ const handleCustomCoverDownload = () => {
               :disabled="!previewUrl || processing"
               @click="handleCoverDownload(1280, 800)"
             >
-              <div class="flex flex-col items-start gap-1">
+              <div class="flex flex-col items-start gap-1 overflow-hidden">
                 <span class="font-semibold">1280 x 800</span>
-                <span class="text-xs text-muted-foreground">{{ t('export.cover.laptop') }}</span>
+                <span class="text-xs text-muted-foreground truncate w-full text-left">{{ t('export.cover.laptop') }}</span>
               </div>
-              <Download class="w-4 h-4 text-muted-foreground" />
             </Button>
             <Button 
               variant="outline" 
@@ -297,15 +296,36 @@ const handleCustomCoverDownload = () => {
               :disabled="!previewUrl || processing"
               @click="handleCoverDownload(640, 400)"
             >
-              <div class="flex flex-col items-start gap-1">
+              <div class="flex flex-col items-start gap-1 overflow-hidden">
                 <span class="font-semibold">640 x 400</span>
-                <span class="text-xs text-muted-foreground">{{ t('export.cover.thumbnail') }}</span>
+                <span class="text-xs text-muted-foreground truncate w-full text-left">{{ t('export.cover.thumbnail') }}</span>
               </div>
-              <Download class="w-4 h-4 text-muted-foreground" />
+            </Button>
+            <Button 
+              variant="outline" 
+              class="justify-between h-16 px-4"
+              :disabled="!previewUrl || processing"
+              @click="handleCoverDownload(440, 280)"
+            >
+              <div class="flex flex-col items-start gap-1 overflow-hidden">
+                <span class="font-semibold">440 x 280</span>
+                <span class="text-xs text-muted-foreground truncate w-full text-left">{{ t('export.cover.extension') }}</span>
+              </div>
+            </Button>
+            <Button 
+              variant="outline" 
+              class="justify-between h-16 px-4"
+              :disabled="!previewUrl || processing"
+              @click="handleCoverDownload(1400, 560)"
+            >
+              <div class="flex flex-col items-start gap-1 overflow-hidden">
+                <span class="font-semibold">1400 x 560</span>
+                <span class="text-xs text-muted-foreground truncate w-full text-left">{{ t('export.cover.store') }}</span>
+              </div>
             </Button>
             
             <!-- Custom Dimensions -->
-            <div class="space-y-3 pt-2 border-t mt-2">
+            <div class="col-span-2 space-y-3 pt-2 border-t mt-2">
               <Label class="text-xs font-semibold text-muted-foreground uppercase">{{ t('export.cover.customSize') }}</Label>
               <div class="grid grid-cols-2 gap-3">
                 <div class="space-y-1.5">
