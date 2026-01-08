@@ -8,6 +8,16 @@
 
 MiaoCrop 是一个纯前端（静态）的图片裁剪与导出工具。所有处理都在浏览器本地完成（不依赖服务器上传/处理）。
 
+在开发 Chrome 扩展 **MiaoMint** 时，我发现商店封面图的尺寸要求比较严格，因此开发了这个工具来帮助我快速调整图片尺寸。
+
+<a href="https://miaomint.konata9.cc/" target="_blank">
+  <img src="https://miaomint.konata9.cc/logo.png" width="48" height="48" alt="MiaoMint Logo" align="left" style="margin-right: 12px; border-radius: 4px;" />
+</a>
+
+**[MiaoMint](https://miaomint.konata9.cc/)**: 像 Spotlight 一样管理标签页。极速搜索书签与历史记录。
+
+[![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available-blue?logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/miaomint-smart-tab-manage/fhbglejcilmhdnmipnjhanffmbijjego?hl=en)
+
 ## 功能特性
 
 - **纯静态**：无服务端处理，所有操作都在浏览器内完成。
