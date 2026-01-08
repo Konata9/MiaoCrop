@@ -19,15 +19,8 @@ import {
   TabsTrigger 
 } from '@/components/ui/tabs'
 import { Download, Loader2, Package, Calculator } from 'lucide-vue-next'
-import JSZip from 'jszip'
-import { saveAs } from 'file-saver'
 import { useI18n } from '@/lib/i18n'
-import { 
-  removeWhiteBackground, 
-  resizeImage, 
-  generateIcons, 
-  ICON_SIZES 
-} from '@/lib/image-processing'
+import { ICON_SIZES } from '@/lib/image-processing'
 
 const baseUrl = import.meta.env.BASE_URL
 
@@ -39,7 +32,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  (e: 'download', format: string): void
+  (e: 'download', payload: any): void
 }>()
 
 // State
@@ -67,7 +60,6 @@ watch(() => customHeight.value, (newHeight) => {
 
 // Reset custom inputs when aspect ratio changes
 watch(() => props.aspectRatio, () => {
-  // Optional: clear inputs or recalculate if one exists
   if (props.aspectRatio && customWidth.value) {
     customHeight.value = Math.round(customWidth.value / props.aspectRatio)
   }
@@ -77,29 +69,12 @@ watch(() => props.aspectRatio, () => {
 const selectedSizes = ref<number[]>([...ICON_SIZES])
 
 // Standard Download
-const handleStandardDownload = async () => {
-  if (!props.previewUrl) return
-  
-  try {
-    processing.value = true
-    let url = props.previewUrl
-
-    // Apply transparent background if selected
-    if (transparentBg.value) {
-      url = await removeWhiteBackground(url)
-    }
-
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `cropped-image.${format.value}`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  } catch (error) {
-    console.error('Error processing image:', error)
-  } finally {
-    processing.value = false
-  }
+const handleStandardDownload = () => {
+  emit('download', {
+    mode: 'standard',
+    format: format.value,
+    transparent: transparentBg.value
+  })
 }
 
 // Icon Generator
@@ -111,66 +86,23 @@ const toggleSize = (size: number) => {
   }
 }
 
-const handleIconDownload = async () => {
-  if (!props.previewUrl || selectedSizes.value.length === 0) return
-  
-  try {
-    processing.value = true
-    let sourceUrl = props.previewUrl
-    
-    // Apply transparent background if selected (usually desired for icons)
-    if (transparentBg.value) {
-      sourceUrl = await removeWhiteBackground(sourceUrl)
-    }
-
-    const icons = await generateIcons(sourceUrl, selectedSizes.value)
-    
-    const zip = new JSZip()
-    
-    // Add original
-    const originalBlob = await (await fetch(sourceUrl)).blob()
-    zip.file(`icon-original.png`, originalBlob)
-
-    // Add resized icons
-    for (const icon of icons) {
-      const blob = await (await fetch(icon.url)).blob()
-      zip.file(`icon-${icon.size}.png`, blob)
-    }
-
-    const content = await zip.generateAsync({ type: 'blob' })
-    saveAs(content, 'icons.zip')
-  } catch (error) {
-    console.error('Error generating icons:', error)
-  } finally {
-    processing.value = false
-  }
+const handleIconDownload = () => {
+  if (selectedSizes.value.length === 0) return
+  emit('download', {
+    mode: 'icons',
+    sizes: [...selectedSizes.value],
+    transparent: transparentBg.value
+  })
 }
 
 // Cover Generator
-const handleCoverDownload = async (width: number, height: number) => {
-  if (!props.previewUrl) return
-  
-  try {
-    processing.value = true
-    let url = props.previewUrl
-
-    if (transparentBg.value) {
-      url = await removeWhiteBackground(url)
-    }
-
-    const resizedUrl = await resizeImage(url, width, height, 'contain')
-    
-    const link = document.createElement('a')
-    link.href = resizedUrl
-    link.download = `cover-${width}x${height}.png`
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  } catch (error) {
-    console.error('Error generating cover:', error)
-  } finally {
-    processing.value = false
-  }
+const handleCoverDownload = (width: number, height: number) => {
+  emit('download', {
+    mode: 'cover',
+    width,
+    height,
+    transparent: transparentBg.value
+  })
 }
 
 const handleCustomCoverDownload = () => {
@@ -178,6 +110,7 @@ const handleCustomCoverDownload = () => {
     handleCoverDownload(customWidth.value, customHeight.value)
   }
 }
+
 </script>
 
 <template>

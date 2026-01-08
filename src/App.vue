@@ -15,6 +15,9 @@ import CropEditor from '@/components/CropEditor.vue'
 import PreviewPanel from '@/components/PreviewPanel.vue'
 import MiaoMintAd from '@/components/MiaoMintAd.vue'
 import { useI18n } from '@/lib/i18n'
+import JSZip from 'jszip'
+import { saveAs } from 'file-saver'
+import { removeWhiteBackground, resizeImage, generateIcons, cropImage } from '@/lib/image-processing'
 
 const baseUrl = import.meta.env.BASE_URL
 
@@ -93,15 +96,64 @@ const handleAspectRatioChange = (ratio: number | undefined) => {
   currentAspectRatio.value = ratio
 }
 
-const handleDownload = (format: string) => {
-  if (!editorRef.value) return
+// Handlers
+const handleDownload = async (payload: any) => {
+  if (!editorRef.value || !originalImage.value) return
   
-  const { canvas } = editorRef.value.getResult()
-  if (canvas) {
-    const link = document.createElement('a')
-    link.download = `cropped-image.${format}`
-    link.href = canvas.toDataURL(`image/${format}`)
-    link.click()
+  const { coordinates } = editorRef.value.getResult()
+  if (!coordinates) return
+
+  const { mode, transparent } = payload
+  
+  // Lossless crop from original image
+  let url = await cropImage(originalImage.value, coordinates)
+
+  try {
+    if (transparent) {
+      const newUrl = await removeWhiteBackground(url)
+      url = newUrl
+    }
+
+    if (mode === 'standard') {
+      const { format } = payload
+      if (format === 'png' || transparent) {
+        saveAs(url, `cropped-image.png`)
+      } else {
+        // Create a temporary canvas to export with quality 1.0
+        const img = new Image()
+        await new Promise((resolve) => {
+          img.onload = resolve
+          img.src = url
+        })
+        const tempCanvas = document.createElement('canvas')
+        tempCanvas.width = img.width
+        tempCanvas.height = img.height
+        const ctx = tempCanvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0)
+        
+        tempCanvas.toBlob((b: Blob | null) => {
+          if (b) saveAs(b, `cropped-image.${format}`)
+        }, `image/${format}`, 1.0)
+      }
+    } else if (mode === 'icons') {
+      const { sizes } = payload
+      const zip = new JSZip()
+      const icons = await generateIcons(url, sizes)
+      
+      icons.forEach(({ size, url: iconUrl }) => {
+        const data = iconUrl.replace(/^data:image\/(png|jpeg);base64,/, "")
+        zip.file(`icon-${size}x${size}.png`, data, { base64: true })
+      })
+      
+      const content = await zip.generateAsync({ type: "blob" })
+      saveAs(content, "icons.zip")
+    } else if (mode === 'cover') {
+      const { width, height } = payload
+      const resizedUrl = await resizeImage(url, width, height, 'contain')
+      saveAs(resizedUrl, `cover-${width}x${height}.png`)
+    }
+  } catch (error) {
+    console.error('Download error:', error)
   }
 }
 

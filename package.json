@@ -17,6 +17,7 @@
     "file-saver": "^2.0.5",
     "jszip": "^3.10.1",
     "lucide-vue-next": "^0.562.0",
+    "pica": "^9.0.1",
     "reka-ui": "^2.7.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@types/file-saver": "^2.0.7",
     "@types/node": "^24.10.4",
+    "@types/pica": "^9.0.5",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.8.1",
     "autoprefixer": "^10.4.23",
