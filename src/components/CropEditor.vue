@@ -50,7 +50,7 @@ defineExpose({
 
 <template>
   <div class="flex flex-col gap-4 h-full">
-    <div class="relative flex-1 min-h-0 bg-secondary/30 rounded-lg overflow-hidden border">
+    <div class="relative flex-1 min-h-0 bg-secondary/10 rounded-xl overflow-hidden">
       <Cropper
         ref="cropper"
         class="cropper absolute inset-0 w-full h-full"
@@ -62,25 +62,26 @@ defineExpose({
       />
     </div>
     
-    <div class="flex flex-wrap items-center justify-center gap-2 p-2 bg-background border rounded-lg shadow-sm">
-      <Button variant="ghost" size="icon" @click="rotate(-90)" :title="t('crop.rotateLeft')">
+    <div class="flex flex-wrap items-center justify-center gap-2 p-1">
+      <Button variant="ghost" size="icon" @click="rotate(-90)" :title="t('crop.rotateLeft')" class="hover:bg-secondary/50">
         <RotateCcw class="w-4 h-4" />
       </Button>
-      <Button variant="ghost" size="icon" @click="rotate(90)" :title="t('crop.rotateRight')">
+      <Button variant="ghost" size="icon" @click="rotate(90)" :title="t('crop.rotateRight')" class="hover:bg-secondary/50">
         <RotateCw class="w-4 h-4" />
       </Button>
-      <div class="w-px h-6 bg-border mx-1"></div>
-      <Button variant="ghost" size="icon" @click="flip(true, false)" :title="t('crop.flipHorizontal')">
+      <div class="w-px h-6 bg-border/50 mx-1"></div>
+      <Button variant="ghost" size="icon" @click="flip(true, false)" :title="t('crop.flipHorizontal')" class="hover:bg-secondary/50">
         <FlipHorizontal class="w-4 h-4" />
       </Button>
-      <Button variant="ghost" size="icon" @click="flip(false, true)" :title="t('crop.flipVertical')">
+      <Button variant="ghost" size="icon" @click="flip(false, true)" :title="t('crop.flipVertical')" class="hover:bg-secondary/50">
         <FlipVertical class="w-4 h-4" />
       </Button>
-      <div class="w-px h-6 bg-border mx-1"></div>
+      <div class="w-px h-6 bg-border/50 mx-1"></div>
       <Button 
         variant="ghost" 
         size="sm" 
-        :class="{ 'bg-secondary': !localAspectRatio }"
+        class="hover:bg-secondary/50"
+        :class="{ 'bg-secondary text-secondary-foreground': !localAspectRatio }"
         @click="setAspectRatio(undefined)"
       >
         {{ t('crop.free') }}
@@ -88,7 +89,8 @@ defineExpose({
       <Button 
         variant="ghost" 
         size="sm" 
-        :class="{ 'bg-secondary': localAspectRatio === 1 }"
+        class="hover:bg-secondary/50"
+        :class="{ 'bg-secondary text-secondary-foreground': localAspectRatio === 1 }"
         @click="setAspectRatio(1)"
       >
         1:1
@@ -96,7 +98,8 @@ defineExpose({
       <Button 
         variant="ghost" 
         size="sm" 
-        :class="{ 'bg-secondary': localAspectRatio === 4/3 }"
+        class="hover:bg-secondary/50"
+        :class="{ 'bg-secondary text-secondary-foreground': localAspectRatio === 4/3 }"
         @click="setAspectRatio(4/3)"
       >
         4:3
@@ -104,7 +107,8 @@ defineExpose({
       <Button 
         variant="ghost" 
         size="sm" 
-        :class="{ 'bg-secondary': localAspectRatio === 16/9 }"
+        class="hover:bg-secondary/50"
+        :class="{ 'bg-secondary text-secondary-foreground': localAspectRatio === 16/9 }"
         @click="setAspectRatio(16/9)"
       >
         16:9
@@ -112,7 +116,8 @@ defineExpose({
       <Button 
         variant="ghost" 
         size="sm" 
-        :class="{ 'bg-secondary': localAspectRatio === 16/10 }"
+        class="hover:bg-secondary/50"
+        :class="{ 'bg-secondary text-secondary-foreground': localAspectRatio === 16/10 }"
         @click="setAspectRatio(16/10)"
       >
         16:10

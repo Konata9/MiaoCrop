@@ -181,29 +181,29 @@ const handleCustomCoverDownload = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 p-4 border rounded-lg bg-card h-full overflow-hidden">
-    <div class="flex items-center justify-between shrink-0">
+  <div class="flex flex-col gap-6 p-2 h-full overflow-hidden">
+    <div class="flex items-center justify-between shrink-0 px-1">
       <h3 class="font-semibold text-lg">{{ t('export.title') }}</h3>
     </div>
     
     <!-- Preview Area (Compact) -->
-    <div class="h-[180px] shrink-0 flex items-center justify-center bg-muted/30 rounded-lg border border-dashed overflow-hidden relative p-4">
+    <div class="h-[200px] shrink-0 flex items-center justify-center bg-secondary/20 rounded-xl overflow-hidden relative p-4">
       <img 
         v-if="previewUrl" 
         :src="previewUrl" 
-        class="max-w-full max-h-[160px] object-contain shadow-sm rounded-sm transition-all"
+        class="max-w-full max-h-[180px] object-contain shadow-sm rounded-sm transition-all"
         :style="transparentBg ? { backgroundImage: `url(${baseUrl}checkerboard.svg)` } : undefined"
       />
       <div v-else class="text-muted-foreground text-sm flex flex-col items-center gap-2">
-        <div class="w-12 h-12 rounded-full bg-muted flex items-center justify-center opacity-50">
+        <div class="w-12 h-12 rounded-full bg-muted/50 flex items-center justify-center opacity-50">
           <Download class="w-6 h-6" />
         </div>
-        {{ t('export.noPreview') }}
+        <span>{{ t('export.noPreview') }}</span>
       </div>
     </div>
     
     <!-- Controls (Expanded) -->
-    <div class="flex-1 min-h-0 flex flex-col space-y-4 pt-4 border-t">
+    <div class="flex-1 min-h-0 flex flex-col space-y-4 pt-2">
       <div class="flex items-center space-x-2 shrink-0">
         <Switch id="transparent-mode" v-model:checked="transparentBg" />
         <Label htmlFor="transparent-mode">{{ t('export.removeWhiteBg') }}</Label>
