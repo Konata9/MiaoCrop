@@ -18,6 +18,11 @@ MiaoCrop 是一个纯前端（静态）的图片裁剪与导出工具。所有�
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available-blue?logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/miaomint-smart-tab-manage/fhbglejcilmhdnmipnjhanffmbijjego?hl=en)
 
+如果你觉得这个工具对你有帮助，不妨请我喝杯咖啡？
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M11S2U2E)
+<img src="https://raw.githubusercontent.com/Konata9/pic-base/main/pics/20260127232615507.png" width=256 alt="wechat" />
+
 ## 功能特性
 
 - **纯静态**：无服务端处理，所有操作都在浏览器内完成。

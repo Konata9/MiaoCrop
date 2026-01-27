@@ -18,6 +18,11 @@ When creating the Chrome extension **MiaoMint**, I found that the cover size are
 
 [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Available-blue?logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/miaomint-smart-tab-manage/fhbglejcilmhdnmipnjhanffmbijjego?hl=en)
 
+If you find this tool helpful, please consider supporting my work:
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M11S2U2E)
+<img src="https://raw.githubusercontent.com/Konata9/pic-base/main/pics/20260127232615507.png" width=256 alt="wechat" />
+
 ## Features
 
 - **Pure Static**: No server-side processing. Everything runs in your browser.
