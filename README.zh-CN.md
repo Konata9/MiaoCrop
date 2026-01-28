@@ -22,7 +22,7 @@ MiaoCrop 是一个纯前端（静态）的图片裁剪与导出工具。所有�
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M11S2U2E)
 
-<img src="https://raw.githubusercontent.com/Konata9/pic-base/main/pics/20260127232615507.png" width=256 alt="wechat" />
+<img src="https://raw.githubusercontent.com/Konata9/pic-base/main/pics/20260128223151161.png" width=256 alt="wechat" />
 
 ## 功能特性
 
